@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Petualangan Si Panda - Matematika</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: #d0f0c0;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .container {
+      padding: 20px;
+    }
+    img {
+      width: 150px;
+    }
+    .question {
+      font-size: 24px;
+      margin: 20px 0;
+    }
+    .options button {
+      background: #fff;
+      border: 2px solid #4CAF50;
+      border-radius: 10px;
+      padding: 10px 20px;
+      font-size: 18px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background: #c8e6c9;
+    }
+    .feedback {
+      font-size: 20px;
+      margin-top: 15px;
+      height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Petualangan Si Panda 🐼</h1>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Grosser_Panda.JPG" alt="Panda lucu">
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+  </div>
+
+  <script>
+    const questions = [
+      { q: "5 + 3 = ?", options: [6, 8, 10], answer: 8 },
+      { q: "9 - 4 = ?", options: [3, 5, 6], answer: 5 },
+      { q: "6 x 2 = ?", options: [12, 10, 14], answer: 12 },
+      { q: "15 - 7 = ?", options: [7, 8, 9], answer: 8 },
+      { q: "3 x 4 = ?", options: [7, 12, 10], answer: 12 }
+    ];
+
+    let current = 0;
+
+    function loadQuestion() {
+      const q = questions[current];
+      document.getElementById("question").textContent = q.q;
+      const optionsDiv = document.getElementById("options");
+      const feedbackDiv = document.getElementById("feedback");
+      feedbackDiv.textContent = "";
+      optionsDiv.innerHTML = "";
+
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.onclick = () => checkAnswer(opt);
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(opt) {
+      const correct = questions[current].answer;
+      const feedback = document.getElementById("feedback");
+      if (opt === correct) {
+        feedback.textContent = "🎉 Benar!";
+        current++;
+        if (current < questions.length) {
+          setTimeout(loadQuestion, 1000);
+        } else {
+          setTimeout(() => {
+            document.getElementById("question").textContent = "Selamat! Kamu sudah membantu Si Panda! 🐼✨";
+            document.getElementById("options").innerHTML = "";
+            feedback.textContent = "";
+          }, 1000);
+        }
+      } else {
+        feedback.textContent = "❌ Coba lagi, ya!";
+      }
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
